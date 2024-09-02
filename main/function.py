@@ -88,22 +88,13 @@ def manager_out(request):
 
 def get_models_list(request):
     content = content_need(request)
-    content = {
-        'managers': content['managers'],
-        'center': content['center'],
-        'jami': content['jami'],
-        'nazoratda': content['nazoratda'],
-        'bajarilgan': content['bajarilgan'],
-        'muddati_utgan': content['muddati_utgan'],
-        'muddat_bor': content['muddat_bor'],
-        'centers': Center.objects.all(),  # Markazlar.
-        'control_cards': ControlCard.objects.all(),  # Тип контрольной карточки Nazorat kartasining turi
-        'groups': Group.objects.all(),  # Группа Guruh
-        'reporters': Reporter.objects.all(),  # Корреспондент Muhbir
-        'document_types': DocumentType.objects.all(),  # Тип документа Hujjat turi
-        'author_resolutions': AuthorResolution.objects.all(),  # # Автор резолюции Qaror muallifi
-        'type_solutions': TypeSolution.objects.all(),  # Вид решения Yechim turi
-    }
+    content['centers'] = Center.objects.all(),  # Markazlar.
+    content['control_cards'] = ControlCard.objects.all(),  # Тип контрольной карточки Nazorat kartasining turi
+    content['groups'] = Group.objects.all(),  # Группа Guruh
+    content['reporters'] = Reporter.objects.all(),  # Корреспондент Muhbir
+    content['document_types'] = DocumentType.objects.all(),  # Тип документа Hujjat turi
+    content['author_resolutions'] = AuthorResolution.objects.all(),  # # Автор резолюции Qaror muallifi
+    content['type_solutions'] = TypeSolution.objects.all(),  # Вид решения Yechim turi
     return content
 
 
@@ -114,14 +105,13 @@ def create_check_file(request):
     return check_file
 
 
-def update_manager(request, manager_id):
+def update_manager(request, manager):
     if request.method == 'POST':
         file = request.FILES['control_file']
         control_file = ControlFile.objects.create(file=file)
         control_file.save()
         summary = request.POST['summary']
-        type_solution = TypeSolution.objects.get(name=request.POST['type_solution'])
-        manager = Manager.objects.get(id=manager_id)
+        type_solution = TypeSolution.objects.get(pk=int(request.POST['type_solution']))
         letter = Letter.objects.get(id=manager.letter.id)
 
         letter.summary = summary
@@ -144,13 +134,28 @@ def admin_update_manager(request, manager_id):
 
 
 def get_centers_post(request):
-    center_name = request.POST.getlist('centers')
-    print(center_name)
+    center_id = request.POST.getlist('centers')
     centers = []
-    for center in center_name:
-        centers.append(Center.objects.get(name=center))
-    print(centers)
+    for center in center_id:
+        centers.append(Center.objects.get(pk=int(center)))
     return centers
+
+
+def get_selects(request):
+    control_card = ControlCard.objects.get(pk=int(request.POST['control_card']))
+    group = Group.objects.get(pk=int(request.POST.get('group')))
+    reporter = Reporter.objects.get(pk=int(request.POST.get('reporter')))
+    document_type = DocumentType.objects.get(pk=(request.POST.get('document_type')))
+    auth_resolution = AuthorResolution.objects.get(pk=int(request.POST.get('auth_resolution')))
+    type_solution = TypeSolution.objects.get(pk=int(request.POST.get('type_solution')))
+    selects = {
+        'control_card': control_card,
+        'group': group,
+        'reporter': reporter,
+        'document_type': document_type,
+        'auth_resolution': auth_resolution,
+        'type_solution': type_solution
+    }
 
 
 def create_letter(request, selects):
@@ -159,10 +164,13 @@ def create_letter(request, selects):
         group=selects['group'],
         reporter=selects['reporter'],
         document_type=selects['document_type'],
+
         registration_date=request.POST['registration_date'],
         registration_number=request.POST['registration_number'],
+
         document_number=request.POST['document_number'],
         document_date=request.POST['document_date'],
+
         resolution=request.POST['resolution'],
         auth_resolution=selects['auth_resolution'],
         type_solution=selects['type_solution']
@@ -175,15 +183,17 @@ def create_letter(request, selects):
 
 
 def manager_create(request, content):
-    manager = Manager.objects.create(
-        letter=content['letter'],
-        check_file=content['file'],
-        lifetime=request.POST.get('lifetime')
-    )
-    for center in request.POST.getlist('centers'):
-        manager.centers.add(Center.objects.get(name=center))
-    manager.save()
-    return manager
+    centers = content['centers']
+    for center in centers:
+        manager = Manager.objects.create(
+            letter=content['letter'],
+            check_file=content['file'],
+            lifetime=request.POST.get('lifetime'),
+            center=center
+        )
+        manager.save()
+
+    return redirect('main:welcome')
 
 
 def superuser_required(view_func):
@@ -218,7 +228,7 @@ def create_user(request):
             return redirect('main:add-user')
 
 
-def get_user_function(request, user_id):
+def get_user_function(request, user_id):   # xatolik ====================================================
     content = content_need(request)
     user = User.objects.get(pk=user_id)
     center = [center for center in Center.objects.all() if center.user == user]
@@ -243,9 +253,8 @@ def get_center_edit(request, center_id):
     return content
 
 
-def center_edit(request, center_id):
-    center = Center.objects.get(id=center_id)
-    user = User.objects.get(id=request.POST['user_id'])
+def center_edit(request, center):
+    user = User.objects.get(id=int(request.POST['user_id']))
     center.name = request.POST['name']
     center.short = request.POST['short']
     center.user = user
@@ -257,7 +266,6 @@ def center_create(request):
     name = request.POST['center_name']
     short = request.POST['center_short']
     center = Center(name=name, short=short)
-    if center:
-        center.save()
-        return redirect('main:centers')
+    center.save()
+    return redirect('main:centers')
 
