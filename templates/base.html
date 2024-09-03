@@ -114,7 +114,48 @@
                         <i class="menu-icon fa fa-glass"></i>
                         Pages
                     </a>
-
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Tablelar</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li>
+                            <i class="fa fa-puzzle-piece"></i>
+                            <a href="{% url 'table:control_cards' %}">
+                                Control Card
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa fa-id-badge"></i>
+                            <a href="{% url 'table:groups' %}">
+                                Groups
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa fa-bars"></i>
+                            <a href="{% url 'table:reporters' %}">
+                                Reporters
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa fa-share-square-o"></i>
+                            <a href="{% url 'table:document_types' %}">
+                                Document Types
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa fa-id-card-o"></i>
+                            <a href="{% url 'table:author_resolutions' %}">
+                                Author Resolutions
+                            </a>
+                        </li>
+                        <li><i class="fa fa-exclamation-triangle"></i><a href="ui-alerts.html">Alerts</a></li>
+                        <li><i class="fa fa-spinner"></i><a href="ui-progressbar.html">Progress Bars</a></li>
+                        <li><i class="fa fa-fire"></i><a href="ui-modals.html">Modals</a></li>
+                        <li><i class="fa fa-book"></i><a href="ui-switches.html">Switches</a></li>
+                        <li><i class="fa fa-th"></i><a href="ui-grids.html">Grids</a></li>
+                        <li><i class="fa fa-file-word-o"></i><a href="ui-typgraphy.html">Typography</a></li>
+                    </ul>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -165,7 +206,7 @@
                             <i class="fa fa-user"></i>
                             {{ center.name }}
                         </a>
-                        
+
                         <a class="nav-link" href="#"><i class="fa fa-power-off"></i> Logout</a>
                     </div>
                 </div>
