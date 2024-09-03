@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 
 def login_function(request):
+
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(request, username=username, password=password)
