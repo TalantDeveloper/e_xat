@@ -3,7 +3,7 @@ from xml.dom.minidom import Document
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from main.function import superuser_required
+from main.function import superuser_required, content_need
 from main.models import *
 
 
@@ -187,3 +187,40 @@ def author_resolutions_delete(request, pk):
     author_resolution.delete()
     return redirect("table:author_resolutions")
 
+
+@login_required
+@superuser_required
+def type_solutions_view(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        type_solution = TypeSolution.objects.create(name=name)
+        type_solution.save()
+        return redirect("table:type_solutions")
+    type_solutions = TypeSolution.objects.all()
+    context = content_need(request)
+    context['type_solutions'] = type_solutions
+    return render(request, 'tables/type_solutions.html', context)
+
+
+@login_required
+@superuser_required
+def type_solutions_update(request, pk):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        type_solution = TypeSolution.objects.get(pk=pk)
+        type_solution.name = name
+        type_solution.save()
+        return redirect("table:type_solutions")
+    context = content_need(request)
+    type_solution = TypeSolution.objects.get(pk=pk)
+    context['type_solutions'] = TypeSolution.objects.all()
+    context['type_solution'] = type_solution
+    return render(request, 'tables/type_solutions.html', context)
+
+
+@login_required
+@superuser_required
+def type_solutions_delete(request, pk):
+    type_solution = TypeSolution.objects.get(pk=pk)
+    type_solution.delete()
+    return redirect("table:type_solutions")

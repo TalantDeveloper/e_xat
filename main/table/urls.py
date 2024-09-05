@@ -24,6 +24,11 @@ urlpatterns = [
     path('author_resolutions/<int:pk>/update/', author_resolutions_update, name='author_resolutions_update'),
     path('author_resolutions/<int:pk>/delete/', author_resolutions_delete, name='author_resolutions_delete'),
 
+    path('type_solutions/', type_solutions_view, name='type_solutions'),
+    path('type_solutions/<int:pk>/update/', type_solutions_update, name='type_solutions_update'),
+    path('type_solutions/<int:pk>/delete/', type_solutions_delete, name='type_solutions_delete'),
+
+
 
 
 ]
