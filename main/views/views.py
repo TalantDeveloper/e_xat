@@ -6,7 +6,7 @@ from main.function import content_need, manager_today, manager_control, manager_
 from main.models import ControlCard, Group, Reporter, DocumentType, AuthorResolution, TypeSolution, Manager, Center
 
 
-@login_required
+@login_required()
 def welcome(request):
     content = content_need(request)
     return render(request, 'main/welcome.html', context=content)
@@ -33,6 +33,7 @@ def manager_out_view(request):
 @login_required
 def create_manager_view(request):
     content = get_models_list(request)
+    print(content['centers'])
     if request.method == 'POST':
         selects = get_selects(request)
         letter = create_letter(request, selects)
@@ -44,7 +45,7 @@ def create_manager_view(request):
             'file': file
         }
         return manager_create(request, mana)
-    return render(request, 'main/home_create.html', context=content)
+    return render(request, 'main/manager_create.html', context=content)
 
 
 @login_required
@@ -54,7 +55,7 @@ def view_manager(request, manager_id):
         return update_manager(request, manager)
     content = get_models_list(request)
     content['manager'] = manager
-    return render(request, 'main/home_update.html', context=content)
+    return render(request, 'main/manager_update.html', context=content)
 
 
 def handler404_view(request, exception):

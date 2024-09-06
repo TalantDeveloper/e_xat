@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{% static 'vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}">
 
 
+    <link rel="stylesheet" href="{% static 'vendors/chosen/chosen.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
@@ -61,37 +62,38 @@
                     UI elements
                 </h3><!-- /.menu-title -->
                 <li>
-                    <a href="#">
+                    <a href="{% url 'main:welcome' %}">
                         <i class="menu-icon fa fa-laptop"></i>
-                        Components
+                        Barcha xatlar
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'main:today' %}">
                         <i class="menu-icon fa fa-table"></i>
-                        Tables
+                        Bugungi xatlar
                     </a>
 
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'main:finish' %}">
                         <i class="menu-icon fa fa-th"></i>
-                        Forms
+                        Bajarilgan xatlar
                     </a>
                 </li>
-
-                <h3 class="menu-title">Icons</h3><!-- /.menu-title -->
-
                 <li>
-                    <a href="#">
+                    <a href="{% url 'main:timeout' %}">
                         <i class="menu-icon fa fa-tasks"></i>
-                        Icons
+                        Yopilmagan xatlar
                     </a>
                 </li>
+
+                <h3 class="menu-title">Xat qo'shish</h3><!-- /.menu-title -->
+
+
                 <li>
-                    <a href="#">
+                    <a href="{% url 'main:manager-add' %}">
                         <i class="menu-icon ti-email"></i>
-                        Widgets
+                        Yangi qo'shish
                     </a>
                 </li>
                 <li>
@@ -207,7 +209,10 @@
                             {{ center.name }}
                         </a>
 
-                        <a class="nav-link" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                        <a class="nav-link" href="{% url 'main:logout' %}">
+                            <i class="fa fa-power-off"></i> 
+                            Logout
+                        </a>
                     </div>
                 </div>
 
@@ -229,6 +234,7 @@
 <script src="{% static 'vendors/popper.js/dist/umd/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'vendors/chosen/chosen.jquery.min.js' %}"></script>
 
 
 <script src="{% static 'vendors/chart.js/dist/Chart.bundle.min.js' %}"></script>

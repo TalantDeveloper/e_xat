@@ -21,7 +21,7 @@ def login_function(request):
 def content_need(request):
     user = User.objects.get(username=request.user.username)
     center = Center.objects.get(user=user)
-    if center.user_is_status:
+    if center.user.is_superuser:
         managers = Manager.objects.all()
     else:
         managers = Manager.objects.filter(center=center)
@@ -89,13 +89,23 @@ def manager_out(request):
 
 def get_models_list(request):
     content = content_need(request)
-    content['centers'] = Center.objects.all(),  # Markazlar.
-    content['control_cards'] = ControlCard.objects.all(),  # Тип контрольной карточки Nazorat kartasining turi
-    content['groups'] = Group.objects.all(),  # Группа Guruh
-    content['reporters'] = Reporter.objects.all(),  # Корреспондент Muhbir
-    content['document_types'] = DocumentType.objects.all(),  # Тип документа Hujjat turi
-    content['author_resolutions'] = AuthorResolution.objects.all(),  # # Автор резолюции Qaror muallifi
-    content['type_solutions'] = TypeSolution.objects.all(),  # Вид решения Yechim turi
+    content = {
+        'managers': content['managers'],
+        'center': content['center'],
+        'total': content['total'],
+        'in_control': content['in_control'],
+        'done': content['done'],
+        'expired': content['expired'],
+        'has_deadline': content['has_deadline'],
+        'centers': Center.objects.all(),  # Markazlar.
+        'control_cards': ControlCard.objects.all(),  # Тип контрольной карточки Nazorat kartasining turi
+        'groups': Group.objects.all(),  # Группа Guruh
+        'reporters': Reporter.objects.all(),  # Корреспондент Muhbir
+        'document_types': DocumentType.objects.all(),  # Тип документа Hujjat turi
+        'author_resolutions': AuthorResolution.objects.all(),  # # Автор резолюции Qaror muallifi
+        'type_solutions': TypeSolution.objects.all(),  # Вид решения Yechim turi
+        'users': User.objects.all()
+    }
     return content
 
 
@@ -157,6 +167,7 @@ def get_selects(request):
         'auth_resolution': auth_resolution,
         'type_solution': type_solution
     }
+    return selects
 
 
 def create_letter(request, selects):

@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from main.function import superuser_required, center_create, get_models_list, center_edit
@@ -7,11 +8,11 @@ from main.models import Center
 
 @login_required
 @superuser_required
-def view_centers(request):
+def centers_view(request):
     if request.method == 'POST':
         return center_create(request)
     content = get_models_list(request)
-    return render(request, 'center/view_center.html', context=content)
+    return render(request, 'center/centers.html', context=content)
 
 
 @login_required

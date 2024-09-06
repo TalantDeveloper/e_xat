@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Xat tahrirlash -
+{% endblock %}
+
+{% block content %}
+    <div class="breadcrumbs">
+        <div class="col-sm-4">
+            <div class="page-header float-left">
+                <div class="page-title">
+                    <h1>Toshkent Davlat Stomatologiya Intituti</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="page-header float-right">
+                <div class="page-title">
+                    <ol class="breadcrumb text-right">
+                        <li class="active">Xat tahrirlash</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <strong>Xat</strong> taxrirlash
+            </div>
+            <div class="card-body card-block">
+                <form action="" method="post" enctype="multipart/form-data"
+                      class="form-horizontal">
+                    {% csrf_token %}
+
+                    <div class="col col-lg-6">
+                        <!-- Nazorat kartasining turi:  Тип РКК-->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class="form-control-label">
+                                    Nazorat kartasining turi
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select name="control_card" id="select" class="form-control" disabled>
+                                    <option value="{{ manager.letter.control_card.id }}">
+                                        {{ manager.letter.control_card }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Guruhi -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="select" class=" form-control-label">
+                                    Guruh:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select name="group" id="select" class="form-control" disabled>
+                                    <option value="{{ manager.letter.group.id }}">
+                                        {{ manager.letter.group }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Корреспондент Muhbir -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="select" class=" form-control-label">
+                                    Muhbir:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select name="reporter" id="select" class="form-control" disabled>
+                                    <option value="{{ manager.letter.reporter.id }}">
+                                        {{ manager.letter.reporter }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Тип документа Hujjat turi -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="select" class=" form-control-label">
+                                    Hujjat turi:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select name="document_type" id="select" class="form-control" disabled>
+                                    <option value="{{ manager.letter.document_type.id }}">
+                                        {{ manager.letter.document_type }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col col-lg-6">
+                        <!-- Ro'yhatga olingan raqami -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class="form-control-label">
+                                    Ro'yhatga olingan raqami:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="text-input" name="registration_number"
+                                       placeholder="nomer" class="form-control" disabled
+                                       value="{{ manager.letter.registration_number }}">
+                            </div>
+                        </div>
+                        <!-- Ro'yhatga olingan sanasi -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class="form-control-label">
+                                    Ro'yhatga olingan sana:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="text-input" name="registration_date" disabled
+                                       class="form-control" value="{{ manager.letter.registration_date|date:'Y-m-d' }}">
+                            </div>
+                        </div>
+                        <!-- Hujjat raqami Дата документа: -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class="form-control-label">
+                                    Hujjat raqami:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="text-input" name="document_number" disabled
+                                       class="form-control" value="{{ manager.letter.document_number }}">
+                            </div>
+                        </div>
+                        <!-- Hujjat sanasi Дата документа: -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class="form-control-label">
+                                    Hujjat sanasi:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="text-input" name="document_date" disabled
+                                       class="form-control" value="{{ manager.letter.document_date|date:'Y-m-d' }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col col-lg-6">
+                        <!-- Qaror muallifi: -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class="form-control-label">
+                                    Qaror muallifi:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select name="auth_resolution" id="select" class="form-control" disabled>
+                                    <option value="{{ manager.letter.auth_resolution.id }}">
+                                        {{ manager.letter.auth_resolution }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Buyruq fayl yuklash: -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="file-input" class=" form-control-label">
+                                    Buyruq:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <a href="{{ manager.check_file.file.url }}" class="btn btn-success">
+                                    <i class="fa fa-cloud-download"></i>
+                                    <strong>buyruq:</strong>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col col-lg-6">
+                        <!-- Muddat Срок: -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class="form-control-label">
+                                    Bajarilish muddati:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="date" id="text-input" name="lifetime" disabled
+                                       class="form-control" value="{{ manager.lifetime|date:'Y-m-d' }}">
+                            </div>
+                        </div>
+                        <!-- Rezolutsiya Резолюция: -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class="form-control-label">
+                                    Rezolutsiya:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="text-input" name="resolution" disabled
+                                       class="form-control" value="{{ manager.letter.resolution }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col col-lg-12">
+                        <!-- Yechim turi: -->
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="select" class=" form-control-label">
+                                    Yechim turi:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select name="type_solution" id="select" class="form-control">
+                                    <option value="{{ manager.letter.type_solution.id }}">
+                                        {{ manager.letter.type_solution }}
+                                    </option>
+                                    {% for type_solution in type_solutions %}
+                                        <option value="{{ type_solution.id }}">
+                                            {{ type_solution.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <label for="centers">
+                                Bo'limlarni tanlang:
+                            </label>
+                            <label for="cars"></label>
+                            <select name="centers" id="cars" multiple="multiple"
+                                    style="width: 350px" size="15">
+                                {% for center in centers %}
+                                    <option value="{{ center.id }}">
+                                        {{ center }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="col-lg-3 btn btn-success btn-group-md">
+                        <i class="fa fa-dot-circle-o"></i>
+                        O'zgartirish
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
