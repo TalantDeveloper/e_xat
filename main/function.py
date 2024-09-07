@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 
 
 def login_function(request):
-
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(request, username=username, password=password)
@@ -50,6 +49,7 @@ def content_need(request):
         'done': done,
         'expired': expired,
         'has_deadline': has_deadline,
+        'users': User.objects.all(),
     }
     return content
 
@@ -213,40 +213,50 @@ def superuser_required(view_func):
     Decorator for views that checks whether the user is a superuser,
     and returns HttpResponseForbidden if not.
     """
+
     def _wrapped_view(request, *args, **kwargs):
         if not request.user.is_superuser:
             return redirect('main:welcome')
         return view_func(request, *args, **kwargs)
+
     return _wrapped_view
 
 
 def create_user(request):
-    if request.method == 'POST':
-        full_name = request.POST['full_name']
-        username = request.POST['username']
-        password = request.POST['password']
-        confirm_password = request.POST['confirm_password']
-        if password == confirm_password:
-            user = User.objects.create(
-                username=username,
-                password=password,
-                first_name=full_name)
-            if user:
-                user.save()
-                return redirect('main:users')
-            else:
-                return redirect('main:add-user')
+    first_name = request.POST['first_name']
+    last_name = request.POST['last_name']
+    username = request.POST['username']
+    password = request.POST['password']
+    conform_password = request.POST['conform_password']
+    if password == conform_password:
+        user = User.objects.create(
+            username=username,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+        )
+        if user:
+            user.save()
+            return redirect('main:users')
         else:
             return redirect('main:add-user')
+    else:
+        return redirect('main:add-user')
 
 
-def get_user_function(request, user_id):   # xatolik ====================================================
+def get_user_function(request, user_id):
     content = content_need(request)
     user = User.objects.get(pk=user_id)
-    center = [center for center in Center.objects.all() if center.user == user]
-    content['user'] = user
-    content['user_center'] = center
-    content['users'] = User.objects.all()
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        user.first_name = first_name
+        user.last_name = last_name
+        user.username = username
+        user.save()
+        return redirect('main:users')
+    content['edit_user'] = user
     return content
 
 
@@ -277,7 +287,10 @@ def center_edit(request, center):
 def center_create(request):
     name = request.POST['center_name']
     short = request.POST['center_short']
-    center = Center(name=name, short=short)
+    try:
+        user = User.objects.get(pk=int(request.POST['user_id']))
+        center = Center(name=name, short=short, user=user)
+    except ValueError:
+        center = Center(name=name, short=short)
     center.save()
     return redirect('main:centers')
-

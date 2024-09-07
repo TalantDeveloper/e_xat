@@ -137,7 +137,7 @@
                                     </thead>
                                     <tbody>
                                     {% for manager in managers %}
-                                        <tr>
+                                        <tr class="{% if manager.today %} bg-primary {% elif manager.control %} bg-success {% elif manager.time_off %} bg-warning text-white {% endif %}">
                                             <td>
                                                 {{ forloop.counter }}
                                             </td>
@@ -161,10 +161,13 @@
                                                 {{ manager.lifetime|date:'d-m-Y' }}
                                             </td>
                                             <td>
-                                                <a href="#"
-                                                   class="btn btn-outline-danger">
-                                                    O'chirish
-                                                </a>
+                                                {% if request.user.is_superuser %}
+                                                    <a href="#"
+                                                       class="btn btn-outline-danger">
+                                                        O'chirish
+                                                    </a>
+                                                {% endif %}
+
                                                 <a href="{% url 'main:manager-update' manager.id %}"
                                                    class="btn btn-outline-primary">
                                                     O'zgartirish

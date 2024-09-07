@@ -59,106 +59,101 @@
                     </a>
                 </li>
                 <h3 class="menu-title">
-                    UI elements
+                    Xatlar
                 </h3><!-- /.menu-title -->
                 <li>
                     <a href="{% url 'main:welcome' %}">
-                        <i class="menu-icon fa fa-laptop"></i>
+                        <i class="menu-icon fa fa-check"></i>
                         Barcha xatlar
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'main:today' %}">
-                        <i class="menu-icon fa fa-table"></i>
+                        <i class="menu-icon fa fa-clock-o"></i>
                         Bugungi xatlar
                     </a>
 
                 </li>
                 <li>
                     <a href="{% url 'main:finish' %}">
-                        <i class="menu-icon fa fa-th"></i>
+                        <i class="menu-icon fa fa-check"></i>
                         Bajarilgan xatlar
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'main:timeout' %}">
-                        <i class="menu-icon fa fa-tasks"></i>
+                        <i class="menu-icon fa fa-exclamation"></i>
                         Yopilmagan xatlar
                     </a>
                 </li>
-
-                <h3 class="menu-title">Xat qo'shish</h3><!-- /.menu-title -->
-
-
                 <li>
                     <a href="{% url 'main:manager-add' %}">
-                        <i class="menu-icon ti-email"></i>
-                        Yangi qo'shish
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="menu-icon fa fa-bar-chart"></i>
-                        Charts
+                        <i class="menu-icon fa fa-plus-square"></i>
+                        Yangi xat yaratish
                     </a>
                 </li>
 
-                <li>
-                    <a href="#">
-                        <i class="menu-icon fa fa-area-chart"></i>
-                        Maps
-                    </a>
 
-                </li>
-                <h3 class="menu-title">Extras</h3><!-- /.menu-title -->
-                <li>
-                    <a href="#">
-                        <i class="menu-icon fa fa-glass"></i>
-                        Pages
-                    </a>
-                </li>
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Tablelar</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li>
-                            <i class="fa fa-puzzle-piece"></i>
-                            <a href="{% url 'table:control_cards' %}">
-                                Control Card
-                            </a>
-                        </li>
-                        <li>
-                            <i class="fa fa-id-badge"></i>
-                            <a href="{% url 'table:groups' %}">
-                                Groups
-                            </a>
-                        </li>
-                        <li>
-                            <i class="fa fa-bars"></i>
-                            <a href="{% url 'table:reporters' %}">
-                                Reporters
-                            </a>
-                        </li>
-                        <li>
-                            <i class="fa fa-share-square-o"></i>
-                            <a href="{% url 'table:document_types' %}">
-                                Document Types
-                            </a>
-                        </li>
-                        <li>
-                            <i class="fa fa-id-card-o"></i>
-                            <a href="{% url 'table:author_resolutions' %}">
-                                Author Resolutions
-                            </a>
-                        </li>
-                        <li>
-                            <i class="fa fa-exclamation-triangle"></i>
-                            <a href="{% url 'table:type_solutions' %}">
-                                Type Solutions
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                {% if request.user.is_superuser %}
+                    <h3 class="menu-title">Xodimlar</h3><!-- /.menu-title -->
+                    <li>
+                        <a href="{% url 'main:centers' %}">
+                            <i class="menu-icon fa fa-gears (alias)"></i>
+                            Markaz va Bo'lim
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'main:users' %}">
+                            <i class="menu-icon fa fa-users"></i>
+                            Xodimlar
+                        </a>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Tablelar</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a href="{% url 'table:control_cards' %}">
+                                    Control Card
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fa fa-id-badge"></i>
+                                <a href="{% url 'table:groups' %}">
+                                    Groups
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fa fa-bars"></i>
+                                <a href="{% url 'table:reporters' %}">
+                                    Reporters
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fa fa-share-square-o"></i>
+                                <a href="{% url 'table:document_types' %}">
+                                    Document Types
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fa fa-id-card-o"></i>
+                                <a href="{% url 'table:author_resolutions' %}">
+                                    Author Resolutions
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fa fa-exclamation-triangle"></i>
+                                <a href="{% url 'table:type_solutions' %}">
+                                    Type Solutions
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                {% endif %}
+
+
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
@@ -210,7 +205,7 @@
                         </a>
 
                         <a class="nav-link" href="{% url 'main:logout' %}">
-                            <i class="fa fa-power-off"></i> 
+                            <i class="fa fa-power-off"></i>
                             Logout
                         </a>
                     </div>

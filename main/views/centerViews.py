@@ -23,7 +23,7 @@ def center_edit_view(request, center_id):
         return center_edit(request, center)
     content = get_models_list(request)
     content['center_edit'] = center
-    return render(request, 'center/center_update.html', context=content)
+    return render(request, 'center/center_edit.html', context=content)
 
 
 @login_required
