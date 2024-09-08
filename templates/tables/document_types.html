@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load static %}
-
+Hujjat turi -
 {% block title %}
 {% endblock %}
 
@@ -18,9 +18,8 @@
             <div class="page-header float-right">
                 <div class="page-title">
                     <ol class="breadcrumb text-right">
-                        <li class="active">
-                            Document Type
-                        </li>
+                        <li><a href="{% url 'main:welcome' %}">Dashboard</a></li>
+                        <li class="active">Hujjat turi</li>
                     </ol>
                 </div>
             </div>
@@ -31,13 +30,13 @@
         <div class="card">
             <div class="card-header">
                 <strong>
-                    Yangi
+                    Hujjat turi
                 </strong>
-                Document Type
             </div>
             {% if document_type %}
                 <div class="card-body card-block">
-                    <form action="{% url 'table:document_types_update' document_type.id %}" method="post" class="form-inline"
+                    <form action="{% url 'table:document_types_update' document_type.id %}" method="post"
+                          class="form-inline"
                           enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-group col-lg-6">
@@ -47,9 +46,9 @@
                             <input type="text" id="exampleInputName2" placeholder="Laptop" required=""
                                    class="form-control" name="name" value="{{ document_type.name }}">
                         </div>
-
                         <button type="submit" class="col-lg-6 btn btn-success btn-group-md">
-                            <i class="fa fa-dot-circle-o"></i> Submit
+                            <i class="fa fa-check"></i>
+                            O'zgartirish
                         </button>
                     </form>
                 </div>
@@ -66,7 +65,7 @@
                                    class="form-control" name="name">
                         </div>
                         <button type="submit" class="col-lg-6 btn btn-success btn-group-md">
-                            <i class="fa fa-dot-circle-o"></i> Submit
+                            <i class="fa fa-check"></i> Saqlash
                         </button>
                     </form>
                 </div>
@@ -78,7 +77,6 @@
     <div class="content mt-3">
         <div class="animated fadeIn">
             <div class="row">
-
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
@@ -90,8 +88,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nomi</th>
-                                    <th>create date</th>
-                                    <th>update date</th>
+                                    <th>Yaratilgan</th>
+                                    <th>Tahrirlangan</th>
                                     <th>Sozlamalar</th>
                                 </tr>
                                 </thead>
@@ -114,7 +112,6 @@
                                         </td>
                                     </tr>
                                 {% endfor %}
-
                                 </tbody>
                             </table>
                         </div>

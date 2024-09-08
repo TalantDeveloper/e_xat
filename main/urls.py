@@ -2,7 +2,8 @@ from django.urls import path
 
 from main.views.centerViews import centers_view, center_edit_view, delete_center
 from main.views.userViews import login_view, logout_view, view_users, create_user_view, edit_user_view, delete_user_view
-from main.views.views import welcome, today_view, finish_view, manager_out_view, create_manager_view, view_manager
+from main.views.views import welcome, today_view, finish_view, manager_out_view, create_manager_view, manager_update, \
+    manager_delete
 
 app_name = 'main'
 
@@ -21,7 +22,8 @@ urlpatterns = [
     path('timeout/', manager_out_view, name='timeout'),
 
     path('manager-add/', create_manager_view, name='manager-add'),
-    path('manager/<int:manager_id>/update/', view_manager, name='manager-update'),
+    path('manager/<int:manager_id>/update/', manager_update, name='manager-update'),
+    path('manager/<int:manager_id>/delete/', manager_delete, name='manager-delete'),
 
 
     path('centers/', centers_view, name='centers'),

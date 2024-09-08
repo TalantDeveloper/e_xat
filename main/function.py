@@ -26,7 +26,6 @@ def content_need(request):
         managers = Manager.objects.filter(center=center)
 
     total = managers.count()
-
     in_control = 0
     done = 0
     expired = 0
@@ -117,31 +116,24 @@ def create_check_file(request):
 
 
 def update_manager(request, manager):
-    if request.method == 'POST':
+    if manager.control_file:
+        control = True if request.POST.get('control') == 'True' else False
+        manager.control = control
+    else:
         file = request.FILES['control_file']
         control_file = ControlFile.objects.create(file=file)
         control_file.save()
-        summary = request.POST['summary']
-        type_solution = TypeSolution.objects.get(pk=int(request.POST['type_solution']))
-        letter = Letter.objects.get(id=manager.letter.id)
-
-        letter.summary = summary
-        letter.control = True
-        letter.save()
         manager.control_file = control_file
-        manager.letter.type_solution = type_solution
-        if request.user.is_superuser:
-            control = request.POST['control']
-            if control == 'ok':
-                manager.control = True
-            elif control == 'no':
-                manager.control = False
-        manager.save()
-        return redirect('main:welcome')
-
-
-def admin_update_manager(request, manager_id):
-    pass
+    summary = request.POST['summary']
+    type_solution = TypeSolution.objects.get(pk=int(request.POST['type_solution']))
+    letter = Letter.objects.get(id=manager.letter.id)
+    letter.summary = summary
+    letter.control = True
+    letter.type_solution = type_solution
+    letter.save()
+    manager.letter = letter
+    manager.save()
+    return redirect('main:welcome')
 
 
 def get_centers_post(request):

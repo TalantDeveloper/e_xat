@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-    Xat tahrirlash -
+    Xatni tahrirlash -
 {% endblock %}
 
 {% block content %}
@@ -19,21 +19,23 @@
             <div class="page-header float-right">
                 <div class="page-title">
                     <ol class="breadcrumb text-right">
-                        <li class="active">Xat tahrirlash</li>
+                        <li><a href="{% url 'main:welcome' %}">Dashboard</a></li>
+                        <li class="active">Xatni tahrirlash</li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
 
-
     <div class="col-lg-12 mt-3">
         <div class="card">
             <div class="card-header">
-                <strong>Xat</strong> taxrirlash
+                <strong>
+                    {{ manager.id }} - xatni
+                </strong> taxrirlash
             </div>
             <div class="card-body card-block">
-                <form action="" method="post" enctype="multipart/form-data"
+                <form action="{% url 'main:manager-update' manager.id %}" method="post" enctype="multipart/form-data"
                       class="form-horizontal">
                     {% csrf_token %}
 
@@ -176,7 +178,7 @@
                                 </label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <a href="{{ manager.check_file.file.url }}" class="btn btn-success">
+                                <a href="{{ manager.check_file.file.url }}" class="btn btn-info" target="_blank">
                                     <i class="fa fa-cloud-download"></i>
                                     <strong>buyruq:</strong>
                                 </a>
@@ -211,7 +213,7 @@
                         </div>
                     </div>
 
-                    <div class="col col-lg-12">
+                    <div class="col col-lg-8">
                         <!-- Yechim turi: -->
                         <div class="row form-group">
                             <div class="col col-md-3">
@@ -220,45 +222,141 @@
                                 </label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <select name="type_solution" id="select" class="form-control">
-                                    <option value="{{ manager.letter.type_solution.id }}">
-                                        {{ manager.letter.type_solution }}
-                                    </option>
-                                    {% for type_solution in type_solutions %}
-                                        <option value="{{ type_solution.id }}">
-                                            {{ type_solution.name }}
+                                {% if manager.control %}
+                                    <select name="type_solution" id="select" class="form-control" disabled>
+                                        <option value="{{ manager.letter.type_solution.id }}">
+                                            {{ manager.letter.type_solution }}
                                         </option>
-                                    {% endfor %}
+                                    </select>
+                                {% else %}
+                                    <select name="type_solution" id="select" class="form-control">
+                                        <option value="{{ manager.letter.type_solution.id }}">
+                                            {{ manager.letter.type_solution }}
+                                        </option>
+                                        {% for type_solution in type_solutions %}
+                                            <option value="{{ type_solution.id }}">
+                                                {{ type_solution.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="select" class=" form-control-label">
+                                    Markaz yoki bo'lim:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select name="control_card" id="select" class="form-control" disabled>
+                                    <option value="{{ manager.letter.control_card.id }}">
+                                        {{ manager.center }}
+                                    </option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col col-lg-4">
+                        <div class="row form-group">
+                            <div class="col col-md-2">
+                                <label for="text-input" class="form-control-label">
+                                    Xulosa:
+                                </label>
+                            </div>
+                            <div class="col col-md-10">
+                                {% if manager.control %}
+                                    <input type="text" id="text-input" name="summary" disabled
+                                           value="{{ manager.letter.summary }}" class="form-control">
+                                {% elif manager.letter.summary %}
+                                    <input type="text" id="text-input" name="summary"
+                                           value="{{ manager.letter.summary }}" class="form-control">
+                                {% else %}
+                                    <input type="text" id="text-input" name="summary"
+                                           placeholder="Xulosa" class="form-control">
+                                {% endif %}
+
                             </div>
                         </div>
 
                         <div class="row form-group">
-                            <label for="centers">
-                                Bo'limlarni tanlang:
-                            </label>
-                            <label for="cars"></label>
-                            <select name="centers" id="cars" multiple="multiple"
-                                    style="width: 350px" size="15">
-                                {% for center in centers %}
-                                    <option value="{{ center.id }}">
-                                        {{ center }}
-                                    </option>
-                                {% endfor %}
-                            </select>
+                            <div class="col col-md-3">
+                                <label for="file-input" class=" form-control-label">
+                                    Javob xat:
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                {% if manager.control_file %}
+                                    <a href="{{ manager.check_file.file.url }}" class="btn btn-info" target="_blank">
+                                        <i class="fa fa-cloud-download"></i>
+                                        <strong>Javob xat:</strong>
+                                    </a>
+                                {% else %}
+                                    <input type="file" id="file-input" name="control_file" required
+                                           class="form-control-file">
+                                {% endif %}
+                            </div>
                         </div>
-
                     </div>
 
-                    <button type="submit" class="col-lg-3 btn btn-success btn-group-md">
-                        <i class="fa fa-dot-circle-o"></i>
-                        O'zgartirish
-                    </button>
+                    <div class="col col-lg-12">
+                        <div class="col col-lg-6">
+                            {% if manager.control_file %}
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="file-input" class=" form-control-label">
+                                            Nazorat:
+                                        </label>
+                                    </div>
+                                    <div class="col col-md-9">
+                                        <div class="form-check-inline form-check">
+                                            {% if manager.control %}
+                                                <label for="inline-radio1" class="form-check-label mr-3">
+                                                    <input type="radio" id="inline-radio1" name="control" value="True"
+                                                           class="form-check-input" checked>Tasdiqlangan
+                                                </label>
+                                                <label for="inline-radio2" class="form-check-label">
+                                                    <input type="radio" id="inline-radio2" name="control" value="False"
+                                                           class="form-check-input">Tasdiqlanmagan
+                                                </label>
+                                            {% else %}
+                                                <label for="inline-radio1" class="form-check-label mr-3">
+                                                    <input type="radio" id="inline-radio1" name="control" value="True"
+                                                           class="form-check-input">Tasdiqlangan
+                                                </label>
+                                                <label for="inline-radio2" class="form-check-label">
+                                                    <input type="radio" id="inline-radio2" name="control" value="False"
+                                                           class="form-check-input" checked>Tasdiqlanmagan
+                                                </label>
+                                            {% endif %}
 
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col col-lg-6">
+                            {% if manager.control %}
+                                <a class="btn btn-success btn-group-md" href="{% url 'main:welcome' %}">
+                                    <i class="fa fa-arrow-left"></i>
+                                    Ortga qaytish
+                                </a>
+                            {% else %}
+                                <a class="btn btn-success btn-group-md" href="{% url 'main:welcome' %}">
+                                    <i class="fa fa-arrow-left"></i>
+                                    Ortga qaytish
+                                </a>
+                                <button type="submit" class="btn btn-success btn-group-md">
+                                    <i class="fa fa-pencil"></i>
+                                    O'zgartirish
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
                 </form>
             </div>
-
         </div>
-
     </div>
 {% endblock %}

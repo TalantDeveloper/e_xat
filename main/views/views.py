@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from main.function import content_need, manager_today, manager_control, manager_out, get_models_list, create_letter, \
-    get_centers_post, create_check_file, manager_create, update_manager, get_selects
+    get_centers_post, create_check_file, manager_create, update_manager, get_selects, superuser_required
 from main.models import ControlCard, Group, Reporter, DocumentType, AuthorResolution, TypeSolution, Manager, Center
 
 
@@ -33,7 +33,6 @@ def manager_out_view(request):
 @login_required
 def create_manager_view(request):
     content = get_models_list(request)
-    print(content['centers'])
     if request.method == 'POST':
         selects = get_selects(request)
         letter = create_letter(request, selects)
@@ -49,7 +48,7 @@ def create_manager_view(request):
 
 
 @login_required
-def view_manager(request, manager_id):
+def manager_update(request, manager_id):
     manager = Manager.objects.get(id=manager_id)
     if request.method == 'POST':
         return update_manager(request, manager)
@@ -58,5 +57,10 @@ def view_manager(request, manager_id):
     return render(request, 'main/manager_update.html', context=content)
 
 
-def handler404_view(request, exception):
-    return render(request, 'handler/404.html', status=404)
+@login_required
+@superuser_required
+def manager_delete(request, manager_id):
+    manager = Manager.objects.get(id=manager_id)
+    manager.delete()
+    return redirect('main:welcome')
+

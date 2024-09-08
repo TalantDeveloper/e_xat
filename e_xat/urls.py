@@ -23,8 +23,8 @@ from main import table
 
 urlpatterns = [
     path('', include('main.urls')),
-    path('admin/', admin.site.urls),
-    path('table/', include('main.table.urls')),
+    path('xatadmin/', admin.site.urls),
+    path('tables/', include('main.table.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

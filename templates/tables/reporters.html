@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load static %}
-
+    Muhbir -
 {% block title %}
 {% endblock %}
 
@@ -18,9 +18,8 @@
             <div class="page-header float-right">
                 <div class="page-title">
                     <ol class="breadcrumb text-right">
-                        <li class="active">
-                            Reporter
-                        </li>
+                        <li><a href="{% url 'main:welcome' %}">Dashboard</a></li>
+                        <li class="active">Muhbir</li>
                     </ol>
                 </div>
             </div>
@@ -31,9 +30,8 @@
         <div class="card">
             <div class="card-header">
                 <strong>
-                    Yangi
+                    Muhbir
                 </strong>
-                Reporter
             </div>
             {% if reporter %}
                 <div class="card-body card-block">
@@ -49,7 +47,8 @@
                         </div>
 
                         <button type="submit" class="col-lg-6 btn btn-success btn-group-md">
-                            <i class="fa fa-dot-circle-o"></i> Submit
+                            <i class="fa fa-check"></i>
+                            O'zgartirish
                         </button>
                     </form>
                 </div>
@@ -66,7 +65,7 @@
                                    class="form-control" name="name">
                         </div>
                         <button type="submit" class="col-lg-6 btn btn-success btn-group-md">
-                            <i class="fa fa-dot-circle-o"></i> Submit
+                            <i class="fa fa-check"></i> Saqlash
                         </button>
                     </form>
                 </div>
@@ -78,11 +77,10 @@
     <div class="content mt-3">
         <div class="animated fadeIn">
             <div class="row">
-
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">Reporter</strong>
+                            <strong class="card-title">Muhbir</strong>
                         </div>
                         <div class="card-body">
                             <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
@@ -90,8 +88,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nomi</th>
-                                    <th>create date</th>
-                                    <th>update date</th>
+                                    <th>Yaratilgan</th>
+                                    <th>Tahrirlangan</th>
                                     <th>Sozlamalar</th>
                                 </tr>
                                 </thead>

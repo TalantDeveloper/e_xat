@@ -10,8 +10,8 @@
 
     <meta name="description" content="Toshkent Davlat Stomatologiya Instituti raqamli hujjat almashish">
 
-    <link rel="apple-touch-icon" href="">
-    <link rel="shortcut icon" href="">
+    <link rel="apple-touch-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
 
     <link rel="stylesheet" href="{% static 'vendors/bootstrap/dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendors/font-awesome/css/font-awesome.min.css' %}">
@@ -86,13 +86,15 @@
                         Yopilmagan xatlar
                     </a>
                 </li>
+                <h3 class="menu-title">
+                    Yangi xat
+                </h3><!-- /.menu-title -->
                 <li>
                     <a href="{% url 'main:manager-add' %}">
                         <i class="menu-icon fa fa-plus-square"></i>
                         Yangi xat yaratish
                     </a>
                 </li>
-
 
                 {% if request.user.is_superuser %}
                     <h3 class="menu-title">Xodimlar</h3><!-- /.menu-title -->
@@ -110,49 +112,47 @@
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Tablelar</a>
+                           aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Jadvallar</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
                                 <a href="{% url 'table:control_cards' %}">
-                                    Control Card
+                                    Nazorat kartasi
                                 </a>
                             </li>
                             <li>
                                 <i class="fa fa-id-badge"></i>
                                 <a href="{% url 'table:groups' %}">
-                                    Groups
+                                    Guruhi
                                 </a>
                             </li>
                             <li>
                                 <i class="fa fa-bars"></i>
                                 <a href="{% url 'table:reporters' %}">
-                                    Reporters
+                                    Muhbir
                                 </a>
                             </li>
                             <li>
                                 <i class="fa fa-share-square-o"></i>
                                 <a href="{% url 'table:document_types' %}">
-                                    Document Types
+                                    Hujjat turi
                                 </a>
                             </li>
                             <li>
                                 <i class="fa fa-id-card-o"></i>
                                 <a href="{% url 'table:author_resolutions' %}">
-                                    Author Resolutions
+                                    Qaror muallifi
                                 </a>
                             </li>
                             <li>
                                 <i class="fa fa-exclamation-triangle"></i>
                                 <a href="{% url 'table:type_solutions' %}">
-                                    Type Solutions
+                                    Yechim turi
                                 </a>
                             </li>
                         </ul>
                     </li>
-
                 {% endif %}
-
 
             </ul>
         </div><!-- /.navbar-collapse -->

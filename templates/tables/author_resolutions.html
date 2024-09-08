@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load static %}
-
+Qaror muallifi -
 {% block title %}
 {% endblock %}
 
@@ -18,8 +18,9 @@
             <div class="page-header float-right">
                 <div class="page-title">
                     <ol class="breadcrumb text-right">
+                        <li><a href="{% url 'main:welcome' %}">Dashboard</a></li>
                         <li class="active">
-                            Author Resolutions
+                            Qaror muallifi
                         </li>
                     </ol>
                 </div>
@@ -31,9 +32,9 @@
         <div class="card">
             <div class="card-header">
                 <strong>
-                    Yangi
+                    Qaror muallifi
                 </strong>
-                Author Resolutions
+                
             </div>
             {% if author_resolution %}
                 <div class="card-body card-block">
@@ -50,7 +51,8 @@
                         </div>
 
                         <button type="submit" class="col-lg-6 btn btn-success btn-group-md">
-                            <i class="fa fa-dot-circle-o"></i> O'zgartirish
+                            <i class="fa fa-check"></i>
+                            O'zgartirish
                         </button>
                     </form>
                 </div>
@@ -67,7 +69,8 @@
                                    class="form-control" name="name">
                         </div>
                         <button type="submit" class="col-lg-6 btn btn-success btn-group-md">
-                            <i class="fa fa-dot-circle-o"></i> Saqlash
+                            <i class="fa fa-check"></i>
+                            Saqlash
                         </button>
                     </form>
                 </div>
@@ -83,7 +86,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">Author Resolutions</strong>
+                            <strong class="card-title">Qaror muallifi</strong>
                         </div>
                         <div class="card-body">
                             <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
@@ -91,8 +94,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nomi</th>
-                                    <th>create date</th>
-                                    <th>update date</th>
+                                    <th>Yaratilgan</th>
+                                    <th>Tahrirlangan</th>
                                     <th>Sozlamalar</th>
                                 </tr>
                                 </thead>
@@ -115,7 +118,6 @@
                                         </td>
                                     </tr>
                                 {% endfor %}
-
                                 </tbody>
                             </table>
                         </div>
