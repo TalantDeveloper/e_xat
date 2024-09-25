@@ -215,8 +215,7 @@ def superuser_required(view_func):
 
 
 def create_user(request):
-    first_name = request.POST['first_name']
-    last_name = request.POST['last_name']
+    first_name = request.POST['full_name']
     username = request.POST['username']
     password = request.POST['password']
     conform_password = request.POST['conform_password']
@@ -225,7 +224,6 @@ def create_user(request):
             username=username,
             password=password,
             first_name=first_name,
-            last_name=last_name,
         )
         if user:
             user.save()
@@ -240,11 +238,9 @@ def get_user_function(request, user_id):
     content = content_need(request)
     user = User.objects.get(pk=user_id)
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
+        first_name = request.POST['full_name']
         username = request.POST['username']
         user.first_name = first_name
-        user.last_name = last_name
         user.username = username
         user.save()
         return redirect('main:users')

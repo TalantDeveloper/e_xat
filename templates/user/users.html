@@ -37,42 +37,35 @@
                 <form action="{% url 'main:add-user' %}" method="post" class="form-inline"
                       enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="form-group col-lg-2">
-                        <label for="exampleInputName2" class="pr-1  form-control-label">
-                            Familya:
+                    <div class="form-group col-lg-3">
+                        <label for="exampleInputName2" class="pr-3  form-control-label">
+                            F.I.O.
                         </label>
-                        <input type="text" id="exampleInputName2" placeholder="First Name" required
-                               class="form-control" name="first_name">
+                        <input type="text" id="exampleInputName2" placeholder="Full Name" required
+                               class="form-control" name="full_name">
                     </div>
                     <div class="form-group col-lg-2">
-                        <label for="exampleInputName2" class="pr-1  form-control-label">
-                            Ism:
-                        </label>
-                        <input type="text" id="exampleInputName2" placeholder="Last Name" required
-                               class="form-control" name="last_name">
-                    </div>
-                    <div class="form-group col-lg-2">
-                        <label for="exampleInputName2" class="pr-1  form-control-label">
+                        <label for="exampleInputName3" class="pr-1  form-control-label">
                             Username:
                         </label>
-                        <input type="text" id="exampleInputName2" placeholder="username" required
+                        <input type="text" id="exampleInputName3" placeholder="username" required
                                class="form-control" name="username">
                     </div>
                     <div class="form-group col-lg-2">
-                        <label for="exampleInputName2" class="pr-1  form-control-label">
+                        <label for="exampleInputName4" class="pr-1  form-control-label">
                             Password:
                         </label>
-                        <input type="password" id="exampleInputName2" placeholder="password" required
+                        <input type="password" id="exampleInputName4" placeholder="password" required
                                class="form-control" name="password">
                     </div>
                     <div class="form-group col-lg-2">
-                        <label for="exampleInputName2" class="pr-1  form-control-label">
+                        <label for="exampleInputName5" class="pr-1  form-control-label">
                             Conform Password:
                         </label>
-                        <input type="password" id="exampleInputName2" placeholder="password" required
+                        <input type="password" id="exampleInputName5" placeholder="password" required
                                class="form-control" name="conform_password">
                     </div>
-                    <button type="submit" class="col-lg-2 btn btn-success btn-group-md">
+                    <button type="submit" class="col-lg-2 ml-3 btn btn-success btn-group-md">
                         <i class="fa fa-dot-circle-o"></i> Submit
                     </button>
                 </form>
@@ -95,8 +88,7 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Familya</th>
-                                    <th>Ism</th>
+                                    <th>Familya Ism Otasini ismi</th>
                                     <th>Username</th>
                                     <th>Sozlamalari</th>
                                 </tr>
@@ -107,19 +99,13 @@
                                         <td>{{ forloop.counter }}</td>
                                         <td>{{ user.first_name }}</td>
                                         <td>
-                                            {{ user.last_name }}
-                                        </td>
-                                        <td>
                                            {{ user.username }}
                                         </td>
-
                                         <td>
-                                            <a href="{% url 'main:delete-user' user.id %}" 
-                                               class="btn btn-outline-danger">
+                                            <a href="{% url 'main:delete-user' user.id %}" class="btn btn-outline-danger">
                                                 O'chirish
                                             </a>
-                                            <a href="{% url 'main:update-user' user.id %}"
-                                               class="btn btn-outline-primary">
+                                            <a href="{% url 'main:update-user' user.id %}" class="btn btn-outline-primary">
                                                 O'zgartirish
                                             </a>
                                         </td>
