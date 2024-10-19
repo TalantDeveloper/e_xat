@@ -86,17 +86,18 @@
                         Yopilmagan xatlar
                     </a>
                 </li>
-                <h3 class="menu-title">
-                    Yangi xat
-                </h3><!-- /.menu-title -->
-                <li>
-                    <a href="{% url 'main:manager-add' %}">
-                        <i class="menu-icon fa fa-plus-square"></i>
-                        Yangi xat yaratish
-                    </a>
-                </li>
-
+            
                 {% if request.user.is_superuser %}
+                    <h3 class="menu-title">
+                        Yangi xat
+                    </h3><!-- /.menu-title -->
+                    <li>
+                        <a href="{% url 'main:manager-add' %}">
+                            <i class="menu-icon fa fa-plus-square"></i>
+                            Yangi xat yaratish
+                        </a>
+                    </li>
+                    
                     <h3 class="menu-title">Xodimlar</h3><!-- /.menu-title -->
                     <li>
                         <a href="{% url 'main:centers' %}">

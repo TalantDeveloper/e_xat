@@ -115,13 +115,14 @@
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>№</th>
                                         <th>ID</th>
                                         <th>Reg / №</th>
-                                        <th>Reg sana</th>
-                                        <th>Nazorat kartasi</th>
+                                        <th>Reg / sana</th>
+                                        <th>Qisqacha mazmun</th>
                                         <th>Hujjat turi</th>
-                                        <th>Markaz</th>
+                                        {% if request.user.is_superuser %}
+                                            <th>Markaz</th>
+                                        {% endif %}
                                         <th>Muddat</th>
                                         <th>Sozlamalar</th>
                                     </tr>
@@ -129,9 +130,7 @@
                                     <tbody>
                                     {% for manager in managers %}
                                         <tr class="{% if manager.control %} bg-success text-white {% elif manager.time_today %} bg-info text-white {% elif manager.time_off %} bg-warning text-white {% endif %}">
-                                            <td>
-                                                {{ forloop.counter }}
-                                            </td>
+
                                             <td>
                                                 {{ manager.id }}
                                             </td>
@@ -143,15 +142,20 @@
                                                 {{ manager.letter.registration_date|date:'d-m-Y' }} /
                                                 {{ manager.letter.document_date|date:'d-m-Y' }}
                                             </td>
+
                                             <td>
-                                                {{ manager.letter.control_card }}
+                                                {{ manager.letter.resolution }}
                                             </td>
+
                                             <td>
                                                 {{ manager.letter.document_type }}
                                             </td>
-                                            <td>
-                                                {{ manager.center.name }}
-                                            </td>
+                                            {% if request.user.is_superuser %}
+                                                <td>
+                                                    {{ manager.center.name }}
+                                                </td>
+                                            {% endif %}
+
                                             <td>
                                                 {{ manager.lifetime|date:'d-m-Y' }}
                                             </td>

@@ -220,12 +220,12 @@
                         <div class="row form-group">
                             <div class="col col-md-3">
                                 <label for="text-input" class="form-control-label">
-                                    Rezolutsiya:
+                                    Qisqacha mazmuni:
                                 </label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" id="text-input" name="resolution"
-                                       placeholder="Rezolutsiya" class="form-control">
+                                <textarea name="resolution" id="" cols="50" rows="5"></textarea>
+                                
                             </div>
                         </div>
                     </div>
@@ -250,10 +250,10 @@
                             </label>
                             <label for="cars"></label>
                             <select name="centers" id="cars" multiple="multiple"
-                                    style="width: 350px" size="10">
+                                    style="width: 550px" size="10">
                                 {% for center in centers %}
                                     <option value="{{ center.id }}">
-                                        {{ center }}
+                                        {{ center }}  ---  {{ center.user.first_name }}
                                     </option>
                                 {% endfor %}
                             </select>
